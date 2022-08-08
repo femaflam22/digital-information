@@ -49,7 +49,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/slider">
+                        <a href="{{route('slider')}}" class="nav-link">
                             <i class="mdi mdi-emoticon menu-icon"></i>
                             <span class="menu-title">Slider</span>
                         </a>

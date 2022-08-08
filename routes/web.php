@@ -18,7 +18,6 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::middleware(['guest', 'preventBackHistory'])->group(function () {
-    Route::get('/slider', [SliderController::class, 'index'])->name('index');
 
     Route::get('/', function() {
         return view('login');
@@ -26,6 +25,8 @@ Route::middleware(['guest', 'preventBackHistory'])->group(function () {
 
     Route::post('/check', [AuthController::class, 'check'])->name('login-form');
 });
+
+Route::get('/slider', [SliderController::class, 'index'])->name('slider');
 
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
