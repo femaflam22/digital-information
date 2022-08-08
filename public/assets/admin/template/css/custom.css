@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-wrap{
+  position: relative;
+  background: #eee;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slider-wrap .slide{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  clip-path: circle(0% at 0 50%);
+}
+
+.slider-wrap .slide.active{
+  clip-path: circle(150% at 0 50%);
+  transition: 2s;
+}
+
+.slider-wrap .slide img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-wrap .slide .info{
+  position: absolute;
+  color: #222;
+  background: rgba(255, 255, 255, 0.3);
+  width: 75%;
+  margin-top: 50px;
+  margin-left: 50px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 25px rgb(1 1 1 / 5%);
+}
+
+.slider-wrap .slide .info h2{
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.slider-wrap .slide .info p{
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.navigation{
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slider-wrap:hover .navigation{
+  opacity: 1;
+}
+
+.prev-btn, .next-btn{
+  z-index: 999;
+  font-size: 2em;
+  color: #222;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev-btn{
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.next-btn{
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.navigation-visibility .slide-icon{
+  /* z-index: 999;
+  background: rgba(255, 255, 255, 0.5);
+  width: 20px;
+  height: 10px;
+  transform: translateY(-50px);
+  margin: 0 6px;
+  border-radius: 2px;
+  box-shadow: 0 5px 25px rgb(1 1 1 / 20%); */
+  visibility: hidden;
+}
+
+/* .navigation-visibility .slide-icon.active{
+  background: #4285F4;
+} */
+
+/* @media (max-width: 900px){
+  .slider{
+    width: 100%;
+  }
+
+  .slider .slide .info{
+    position: relative;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+} */
+
+@media (max-width: 500px){
+  .slider-wrap .slide .info h2{
+    font-size: 1.8em;
+    line-height: 40px;
+  }
+
+  .slider-wrap .slide .info p{
+    font-size: 0.9em;
+  }
+}
+
+.slider{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8% 30px 0 30px;
+}
+
+.card.card-2{
+  overflow: hidden;
+  background-color: #fff;
+  height: 420px;
+  width: 400px;
+  border-radius: 10px;
+  border-bottom: 8px solid yellow;
+  color: #333;
+}
+
+.card.card-2 .image {
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
+.card.card-2 .image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.card.card-2 .sale{
+position: absolute;
+top: 10px;
+left: 10px;
+background-color:yellow;
+color: #333;
+width: 100px;
+height: 40px;
+border-radius: 10px;
+display: flex;
+justify-content: center;
+align-items: center;
+text-transform: uppercase;
+font-size: 12px;
+z-index: 100;
+}
+
+.card.card-2 .details{
+padding: 10px 30px;
+}
+
+.card.card-2 .details .desc {
+  font-size: 1.3rem;
+}
+      

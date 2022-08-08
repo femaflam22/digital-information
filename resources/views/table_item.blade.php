@@ -32,7 +32,7 @@
                             <td class="text-center">{{$no++}}</td>
                             <td>{{$item->title}}</td>
                             <td>{!! $item->desc !!}</td>
-                            <td><img src="{{asset('images/'.$item->image)}}" width="100px"></td>
+                            <td><img src="{{asset('images/'.$item->image)}}" style="border-radius: 0 !important"></td>
                             <td class="d-flex justify-content-center">
                                 <a href="{{route('edit-item',$item->id)}}" class="btn btn-info" style="margin-right: 10px !important">Edit</a>
                                 <form action="{{ route('delete-item',$item->id) }}" method="POST">

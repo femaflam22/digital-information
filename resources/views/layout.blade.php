@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SMK Wikrama Bogor</title>
+    <title>SMK Wikrama Kota Bogor</title>
     <!-- base:css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/template/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/template/vendors/base/vendor.bundle.base.css') }}">
@@ -49,13 +49,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="/slider">
                             <i class="mdi mdi-emoticon menu-icon"></i>
                             <span class="menu-title">Slider</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="docs/documentation.html" class="nav-link">
+                        <a href="/logout" class="nav-link">
                             <i class="mdi mdi-logout menu-icon"></i>
                             <span class="menu-title">Logout</span>
                         </a>
