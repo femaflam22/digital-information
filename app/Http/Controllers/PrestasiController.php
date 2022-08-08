@@ -14,10 +14,10 @@ class PrestasiController extends Controller
      */
     public function index()
     {
-        $prestasi = Prestasi::latest()->paginate(5);
+        $datas = Prestasi::all();
+        $no = 1;
     
-        return view('prestasi',compact('prestasi'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('table_prestasi',compact('datas', 'no'));
     }
    
     /**
@@ -27,7 +27,7 @@ class PrestasiController extends Controller
      */
     public function create()
     {
-        return view('prestasi.create');
+        return view('prestasi');
     }
     
     /**
@@ -39,28 +39,31 @@ class PrestasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required',
-            'nama' => 'required',
-            'jurusan' => 'required',
-            'juara' => 'required',
-            'tingkat' => 'required',
-            'waktu' => 'required',
+            'name' => 'required',
+            'date' => 'required',
+            'students' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
   
-        $input = $request->all();
-  
         if ($image = $request->file('image')) {
             $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $profileImage = date('YmdHis') . "-prestasi" . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
     
-        Prestasi::create($input);
+        $post = Prestasi::create([
+            'name' => $request->name,
+            'date' => $request->date,
+            'students' => $request->students,
+            'image' => $profileImage,
+        ]);
      
-        return redirect()->back()
-                        ->with('success','Prestasi created successfully.');
+        if($post) {
+            return back()->with("success", "Berhasil! data telah ditambahkan");
+        } else {
+            return back()->with("failed", "Gagal! gagal menambahkan data");
+        }
     }
      
     /**
@@ -71,7 +74,7 @@ class PrestasiController extends Controller
      */
     public function show(Prestasi $prestasi)
     {
-        return view('prestasi.show',compact('prestasi'));
+        // 
     }
      
     /**
@@ -80,9 +83,10 @@ class PrestasiController extends Controller
      * @param  \App\Prestasi $prestasi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Prestasi $prestasi)
+    public function edit($id)
     {
-        return view('prestasi.edit',compact('prestasi'));
+        $prestasi = Prestasi::where('id',$id)->first()->toArray();
+        return view('edit_prestasi', compact('prestasi'));
     }
     
     /**
@@ -92,32 +96,36 @@ class PrestasiController extends Controller
      * @param  \App\Prestasi  $prestasi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prestasi $prestasi)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'nis' => 'required',
-            'nama' => 'required',
-            'jurusan' => 'required',
-            'juara' => 'required',
-            'tingkat' => 'required',
-            'waktu' => 'required',
+            'name' => 'required',
+            'date' => 'required',
+            'students' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
-  
-        $input = $request->all();
   
         if ($image = $request->file('image')) {
             $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $profileImage = date('YmdHis') . "-prestasi" . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
-        }else{
-            unset($input['image']);
+        } else {
+            $profileImage = Prestasi::where('id', $id)->value('image');
         }
           
-        $prestasi->update($input);
-    
-        return redirect()->route('prestasi.index')
-                        ->with('success','Prestasi updated successfully');
+        $update = Prestasi::where('id', $id)->update([
+            'name' => $request->name,
+            'date' => $request->date,
+            'students' => $request->students,
+            'image' => $profileImage,
+        ]);
+
+        if($update) {
+            return back()->with("success", "Berhasil! data telah diperbarui");
+        } else {
+            return back()->with("failed", "Gagal! gagal memperbarui data");
+        }
     }
   
     /**
@@ -126,11 +134,9 @@ class PrestasiController extends Controller
      * @param  \App\Prestasi  $prestasi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prestasi $prestasi)
+    public function destroy($id)
     {
-        $prestasi->delete();
-     
-        return redirect()->route('prestasi.index')
-                        ->with('success','Prestasi deleted successfully');
+        Prestasi::where('id',$id)->delete();
+        return back()->with("success", "Berhasil! data telah dihapus"); 
     }
 }

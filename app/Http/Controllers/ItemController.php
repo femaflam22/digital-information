@@ -14,7 +14,10 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return view('item');
+        $items = Item::all();
+        $no = 1;
+    
+        return view('table_item',compact('items', 'no'));
     }
 
     /**
@@ -24,7 +27,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('item');
     }
 
     /**
@@ -37,8 +40,7 @@ class ItemController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'desc' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
         if ($image = $request->file('image')) {
@@ -47,11 +49,17 @@ class ItemController extends Controller
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
+
+        if ($request->desc) {
+           $desc = $request->desc;
+        } else {
+            $desc = '-';
+        }
         
         $post = Item::create([
             'title'=> $request->title,
             'image'=> $profileImage,
-            'desc'=> $request->desc,
+            'desc'=> $desc,
         ]);
 
         if($post) {
@@ -78,9 +86,10 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $item = Item::where('id',$id)->first()->toArray();
+        return view('edit_item', compact('item'));
     }
 
     /**
@@ -90,9 +99,33 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        } else {
+            $profileImage = Item::where('id', $id)->value('image');
+        }
+        
+        $update = Item::where('id', $id)->update([
+            'title'=> $request->title,
+            'image'=> $profileImage,
+            'desc'=> $request->desc,
+        ]);
+
+        if($update) {
+            return back()->with("success", "Berhasil! data telah diperbarui");
+        } else {
+            return back()->with("failed", "Gagal! gagal memperbarui data");
+        }
     }
 
     /**
@@ -101,8 +134,9 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
-        //
+        Item::where('id',$id)->delete();
+        return back()->with("success", "Berhasil! data telah dihapus");
     }
 }

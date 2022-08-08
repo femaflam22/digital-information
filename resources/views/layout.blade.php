@@ -30,8 +30,8 @@
                         </a>
                         <div class="submenu">
                             <ul>
-                                <li class="nav-item"><a class="nav-link" href="/prestasi">Prestasi</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/other-item">Item Lain</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/prestasi/create">Prestasi</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/item/create">Item Lain</a></li>
                             </ul>
                         </div>
                     </li>
@@ -44,7 +44,7 @@
                         <div class="submenu">
                             <ul>
                                 <li class="nav-item"><a class="nav-link" href="/prestasi">Prestasi</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/other-item">Item Lain</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/item">Item Lain</a></li>
                             </ul>
                         </div>
                     </li>
@@ -92,6 +92,6 @@
                 } );
     </script>
 	<script src="{{ asset('assets/admin/template/vendors/base/vendor.bundle.base.js') }}"></script>
-    <script src="{{ asset('assets/admin/template/js/template.js') }}"></script>
+    {{-- <script src="{{ asset('assets/admin/template/js/template.js') }}"></script> --}}
   </body>
 </html>
