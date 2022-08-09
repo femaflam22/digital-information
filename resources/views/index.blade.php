@@ -13,28 +13,23 @@
   <body>
 
     <div class="slider-wrap">
+        <div class="slide active">
+          <img src="{{asset('images/slide.jpg')}}" alt="" class="img-first">
+          <div class="info i-first">
+          <h2 class="h2-first">Selamat Datang di SMK Wikrama kota Bogor</h2>
+          <p class="p-first">ILMU YANG AMALIAH | AMAL YANG ILMIAH | AKHLAKUL KARIMAH</p>
+          </div>
+        </div>
         @foreach ($items as $item)
-        @if ($item->id == $no)
-            <div class="slide active">
-                <img src="{{asset('images/'.$item->image)}}" alt="">
-                <div class="info">
-                <h2>{{$item->title}}</h2>
-                @if ($item->desc !== '-')
-                    <p>{!! $item->desc !!}</p>
-                @endif
-                </div>
+        <div class="slide">
+            <img src="{{asset('images/'.$item->image)}}" alt="">
+            <div class="info">
+            <h2>{{$item->title}}</h2>
+            @if ($item->desc !== '-')
+                <p>{!! $item->desc !!}</p>
+            @endif
             </div>
-        @else
-            <div class="slide">
-                <img src="{{asset('images/'.$item->image)}}" alt="">
-                <div class="info">
-                <h2>{{$item->title}}</h2>
-                @if ($item->desc !== '-')
-                    <p>{!! $item->desc !!}</p>
-                @endif
-                </div>
-            </div>
-        @endif
+        </div>
         @endforeach
 
         <div class="slide">

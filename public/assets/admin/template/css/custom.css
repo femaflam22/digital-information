@@ -41,6 +41,37 @@ body{
   object-fit: cover;
 }
 
+.slider-wrap .slide img.img-first {
+  opacity: 0.8;
+}
+
+h2.h2-first {    
+animation: showup 7s infinite;
+font-size: 3em !important;
+color: #fff;
+}
+
+p.p-first {
+margin-left:-350px;
+animation: slidein 7s infinite;
+font-size: 1.5em !important;
+color: #fff;
+}
+
+@keyframes showup {
+0% {opacity:0;}
+20% {opacity:1;}
+80% {opacity:1;}
+100% {opacity:0;}
+}
+
+@keyframes slidein {
+0% { margin-left:-2000px; }
+20% { margin-left:-2000px; }
+35% { margin-left:0px; }
+100% { margin-left:0px; }
+}
+
 .slider-wrap .slide .info{
   position: absolute;
   color: #222;
@@ -51,6 +82,17 @@ body{
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 5px 25px rgb(1 1 1 / 5%);
+}
+
+.slider-wrap .slide .info.i-first {
+  background: rgba(12, 12, 12, 0.3) !important;
+  margin-top: 25% !important;
+  margin-left: 8%;
+  text-align: center;
+}
+
+.details .desc ul, .details .desc ol {
+  padding-left: 20px !important;
 }
 
 .slider-wrap .slide .info h2{
