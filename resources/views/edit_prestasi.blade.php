@@ -25,21 +25,37 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="name">Nama Lomba</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{$prestasi['name']}}">
+                    <label for="name">Nama Lomba<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}" id="name" placeholder="Name" name="name" value="{{$prestasi['name']}}">
+                    @if ($errors->has('name'))
+                        <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <label for="date">Tanggal Kegiatan</label>
-                    <input type="date" class="form-control" id="date" placeholder="Name" name="date" value="{{$prestasi['date']}}">
+                    <label for="date">Tanggal Kegiatan<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control {{$errors->has('date') ? 'is-invalid' : ''}}" id="date" placeholder="Name" name="date" value="{{$prestasi['date']}}">
+                    @if ($errors->has('date'))
+                        <div class="invalid-feedback">{{ $errors->first('date') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="status" name="status" {{ $prestasi['status'] ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="status">Status Keaktifan<span class="text-danger">*</span></label>
+                    </div>
+                </div>
+                <div class="form-group" style="display: flex; flex-direction: column">
                     <label>Gambar</label>
-                    <img src="{{asset('images/'.$prestasi['image'])}}" width="200">
+                    <img src="{{asset('images/'.$prestasi['image'])}}" width="200" class="py-3">
                     <input type="file" name="image" class="form-control file-upload-info" placeholder="Upload Image">
                 </div>
                 <div class="form-group">
                     <label for="exampleTextarea1">Peserta</label>
-                    <textarea class="form-control" id="desc-form" name="students">{{ html_entity_decode($prestasi['students']) }}</textarea>
+                    @if ($prestasi['students'] !== '-')
+                        <textarea class="form-control" id="desc-form" name="students">{{ $prestasi['students'] }}</textarea>
+                    @else
+                        <textarea class="form-control" id="desc-form" name="students"></textarea>
+                    @endif
                 </div>
                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                 <button class="btn btn-light">Cancel</button>

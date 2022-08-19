@@ -50,16 +50,25 @@ class ItemController extends Controller
             $input['image'] = "$profileImage";
         }
 
-        if ($request->desc) {
+        if (isset($request->desc)) {
            $desc = $request->desc;
         } else {
             $desc = '-';
+        }
+
+        $cek = Item::all()->toArray();
+        if (empty($cek)) {
+            $order = 1;
+        }else {
+            $order = count($cek)+1;
         }
         
         $post = Item::create([
             'title'=> $request->title,
             'image'=> $profileImage,
             'desc'=> $desc,
+            'status' => 1,
+            'order' => $order,
         ]);
 
         if($post) {
@@ -89,7 +98,9 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::where('id',$id)->first()->toArray();
-        return view('edit_item', compact('item'));
+        $allItem = Item::all()->toArray();
+        $total = count($allItem)+1;
+        return view('edit_item', compact('item', 'total'));
     }
 
     /**
@@ -103,6 +114,7 @@ class ItemController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'order' => 'required',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
@@ -114,11 +126,25 @@ class ItemController extends Controller
         } else {
             $profileImage = Item::where('id', $id)->value('image');
         }
+
+        if (isset($request->desc)) {
+            $desc = $request->desc;
+        } else {
+            $desc = '-';
+        }
+
+        if (isset($request->status)) {
+            $status = 1;
+        }else {
+            $status = 0;
+        }
         
         $update = Item::where('id', $id)->update([
             'title'=> $request->title,
             'image'=> $profileImage,
-            'desc'=> $request->desc,
+            'desc'=> $desc,
+            'status' => $status,
+            'order' => $request->order,
         ]);
 
         if($update) {

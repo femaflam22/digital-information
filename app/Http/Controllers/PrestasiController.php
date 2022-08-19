@@ -41,7 +41,6 @@ class PrestasiController extends Controller
         $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'students' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
   
@@ -51,12 +50,19 @@ class PrestasiController extends Controller
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
+
+        if (isset($request->students)) {
+            $students = $request->students;
+        } else {
+            $students = '-';
+        }
     
         $post = Prestasi::create([
             'name' => $request->name,
             'date' => $request->date,
-            'students' => $request->students,
+            'students' => $students,
             'image' => $profileImage,
+            'status' => 1,
         ]);
      
         if($post) {
@@ -101,7 +107,6 @@ class PrestasiController extends Controller
         $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'students' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
   
@@ -113,12 +118,25 @@ class PrestasiController extends Controller
         } else {
             $profileImage = Prestasi::where('id', $id)->value('image');
         }
+
+        if (isset($request->students)) {
+            $students = $request->students;
+        } else {
+            $students = '-';
+        }
           
+        if (isset($request->status)) {
+            $status = 1;
+        }else {
+            $status = 0;
+        }
+
         $update = Prestasi::where('id', $id)->update([
             'name' => $request->name,
             'date' => $request->date,
-            'students' => $request->students,
+            'students' => $students,
             'image' => $profileImage,
+            'status' => $status,
         ]);
 
         if($update) {

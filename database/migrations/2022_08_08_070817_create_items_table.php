@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->longText('desc');
+            $table->boolean('status');
+            $table->integer('order');
             $table->timestamps();
         });
     }

@@ -19,17 +19,23 @@
             <div class="card-body">
                 <h4 class="card-title">Upload Item</h4>
                 <p class="card-description">
-                    Mohon untuk melengkapi input form
+                    Mohon untuk melengkapi input form bertanda <span class="text-danger">*</span>
                 </p>
                 <form class="forms-sample" action="{{route('item')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="title">Judul</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Contoh : Profile Wikrama">
+                        <label for="title">Judul<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" name="title" id="title" placeholder="Contoh : Profile Wikrama">
+                        @if ($errors->has('title'))
+                            <div class="invalid-feedback">{{ $errors->first('title') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label>Gambar</label>
-                        <input type="file" name="image" class="form-control file-upload-info" placeholder="Upload Image">
+                        <label>Gambar<span class="text-danger">*</span></label>
+                        <input type="file" name="image" class="form-control file-upload-info {{$errors->has('image') ? 'is-invalid' : ''}}" placeholder="Upload Image">
+                        @if ($errors->has('image'))
+                            <div class="invalid-feedback">{{ $errors->first('image') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea1">Info Tambahan</label>

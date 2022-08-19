@@ -10,7 +10,7 @@ class SliderController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
+        $items = Item::where('status', 1)->orderBy('order', 'asc')->get();
         $no = Item::orderBy('id', 'asc')->limit(1)->value('id');
         $prestasi = Prestasi::all();
 

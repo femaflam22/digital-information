@@ -23,6 +23,7 @@
                         <th>
                           Peserta
                         </th>
+                        <th>Status</th>
                         <th> Gambar </th>
                         <th> Aksi </th>
                       </tr>
@@ -34,7 +35,14 @@
                           <td>{{$data->name}}</td>
                           <td>{{$data->date}}</td>
                           <td>{!! $data->students !!}</td>
-                          <td><img src="{{asset('images/'.$data->image)}}" class="m-auto" style="border-radius: 0 !important"></td>
+                          <td class="text-center">
+                            @if ($data->status)
+                                Aktif
+                            @else
+                                Non-aktif
+                            @endif
+                          </td>
+                          <td><img src="{{asset('images/'.$data->image)}}" style="border-radius: 0 !important; margin: 10px auto; display: block; width: 180px !important; height: 120px !important"></td>
                             <td class="d-flex justify-content-center">
                                 <a href="{{route('edit-prestasi',$data->id)}}" class="btn btn-info" style="margin-right: 10px !important">Edit</a>
                                 <form action="{{ route('delete-prestasi',$data->id) }}" method="POST">

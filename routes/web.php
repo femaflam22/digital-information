@@ -29,7 +29,7 @@ Route::middleware(['guest', 'preventBackHistory'])->group(function () {
 Route::get('/slider', [SliderController::class, 'index'])->name('slider');
 
 Route::middleware(['auth', 'preventBackHistory'])->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/item',[ItemController::class, 'index'])->name('index-item');
     Route::get('/item/create', [ItemController::class, 'create'])->name('create-item');
     Route::post('/post/item', [ItemController::class, 'store'])->name('item');

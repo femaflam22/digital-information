@@ -41,10 +41,12 @@
                          <img src="{{asset('images/'.$data->image)}}">
                     </div>
                     <div class="details">
-                        <h2>{{$data->name}}</h2>
+                        <h3>{{$data->name}}</h3>
+                        @if ($data->students !== '-')
                         <div class="desc">
                             {!! $data->students !!}
                         </div>
+                        @endif
                     </div>
               </div>
                 @endforeach

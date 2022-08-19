@@ -12,5 +12,7 @@ class Item extends Model
         'title',
         'image',
         'desc',
+        'status',
+        'order'
     ];
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('image');
             $table->longText('students');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

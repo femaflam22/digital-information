@@ -25,17 +25,45 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <label for="title">Judul</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Contoh : Profile Wikrama" value="{{$item['title']}}">
+                        <label for="title">Judul<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" name="title" id="title" placeholder="Contoh : Profile Wikrama" value="{{$item['title']}}">
+                        @if ($errors->has('title'))
+                            <div class="invalid-feedback">{{ $errors->first('title') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
+                        <label for="order">Urutan Tampil<span class="text-danger">*</span></label>
+                        <select class="custom-select {{$errors->has('order') ? 'is-invalid' : ''}}" id="order" name="order">
+                            @for ($i = 1; $i <= $total; $i++)
+                                @if ($i == $total)
+                                    <option value="{{$i}}" {{ $item['order'] == $i ? 'selected' : '' }}>{{$i}} - (draf sebelum bertukar order dengan item lain)</option>
+                                @else
+                                    <option value="{{$i}}" {{ $item['order'] == $i ? 'selected' : '' }}>{{$i}}</option>
+                                @endif
+                            @endfor
+                        </select>
+                        @if ($errors->has('order'))
+                            <div class="invalid-feedback">{{ $errors->first('order') }}</div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" {{ $item['status'] ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="status">Status Keaktifan<span class="text-danger">*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column">
                         <label>Gambar</label>
-                        <img src="{{asset('images/'.$item['image'])}}" width="200">
+                        <img src="{{asset('images/'.$item['image'])}}"  width="200" class="py-3">
                         <input type="file" name="image" class="form-control file-upload-info" placeholder="Upload Image">
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea1">Info Tambahan</label>
-                        <textarea id="desc-form" name="desc">{{$item['desc']}}</textarea>
+                        @if ($item['desc'] !== '-')
+                            <textarea id="desc-form" name="desc">{{$item['desc']}}</textarea>
+                        @else
+                            <textarea id="desc-form" name="desc"></textarea>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>

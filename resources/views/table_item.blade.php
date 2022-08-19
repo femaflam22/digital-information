@@ -22,6 +22,8 @@
                         <th>
                           Deskripsi
                         </th>
+                        <th>Status</th>
+                        <th>Urutan</th>
                         <th> Gambar </th>
                         <th> Aksi </th>
                       </tr>
@@ -32,7 +34,15 @@
                             <td class="text-center">{{$no++}}</td>
                             <td>{{$item->title}}</td>
                             <td>{!! $item->desc !!}</td>
-                            <td><img src="{{asset('images/'.$item->image)}}" style="border-radius: 0 !important"></td>
+                            <td class="text-center">
+                              @if ($item->status)
+                                  Aktif
+                              @else
+                                  Non-aktif
+                              @endif
+                            </td>
+                            <td class="text-center">{{$item->order}}</td>
+                            <td><img src="{{asset('images/'.$item->image)}}" style="border-radius: 0 !important; margin: 10px auto; display: block; width: 180px !important; height: 120px !important"></td>
                             <td class="d-flex justify-content-center">
                                 <a href="{{route('edit-item',$item->id)}}" class="btn btn-info" style="margin-right: 10px !important">Edit</a>
                                 <form action="{{ route('delete-item',$item->id) }}" method="POST">

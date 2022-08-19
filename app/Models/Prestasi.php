@@ -16,5 +16,6 @@ class Prestasi extends Model
         'date',
         'image',
         'students',
+        'status'
     ];
 }

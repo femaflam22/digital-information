@@ -17,27 +17,36 @@
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Basic form elements</h4>
+                <h4 class="card-title">Upload Prestasi</h4>
                 <p class="card-description">
-                Basic form elements
+                    Mohon untuk melengkapi input form bertanda <span class="text-danger">*</span>
                 </p>
                 <form class="forms-sample" action="{{route('prestasi')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="name">Nama Lomba</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+                    <label for="name">Nama Lomba<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control {{$errors->has('name') ? 'is-invalid' : ''}}" id="name" placeholder="Name" name="name">
+                    @if ($errors->has('name'))
+                        <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <label for="date">Tanggal Kegiatan</label>
-                    <input type="date" class="form-control" id="date" placeholder="Name" name="date">
+                    <label for="date">Tanggal Kegiatan<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control {{$errors->has('date') ? 'is-invalid' : ''}}" id="date" placeholder="Name" name="date">
+                    @if ($errors->has('date'))
+                        <div class="invalid-feedback">{{ $errors->first('date') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <label>Gambar</label>
-                    <input type="file" name="image" class="form-control file-upload-info" placeholder="Upload Image">
+                    <label>Gambar<span class="text-danger">*</span></label>
+                    <input type="file" name="image" class="form-control file-upload-info {{$errors->has('image') ? 'is-invalid' : ''}}" placeholder="Upload Image">
+                    @if ($errors->has('image'))
+                        <div class="invalid-feedback">{{ $errors->first('image') }}</div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="exampleTextarea1">Peserta</label>
-                    <textarea class="form-control" id="desc-form" name="students">Masukan nama peserta lomba disini</textarea>
+                    <textarea class="form-control" id="desc-form" name="students"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                 <button class="btn btn-light">Cancel</button>
