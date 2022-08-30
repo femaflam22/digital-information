@@ -35,11 +35,7 @@
                         <label for="order">Urutan Tampil<span class="text-danger">*</span></label>
                         <select class="custom-select {{$errors->has('order') ? 'is-invalid' : ''}}" id="order" name="order">
                             @for ($i = 1; $i <= $total; $i++)
-                                @if ($i == $total)
-                                    <option value="{{$i}}" {{ $item['order'] == $i ? 'selected' : '' }}>{{$i}} - (draf sebelum bertukar order dengan item lain)</option>
-                                @else
-                                    <option value="{{$i}}" {{ $item['order'] == $i ? 'selected' : '' }}>{{$i}}</option>
-                                @endif
+                                <option value="{{$i}}" {{ $item['order'] == $i ? 'selected' : '' }}>{{$i}}</option>
                             @endfor
                         </select>
                         @if ($errors->has('order'))

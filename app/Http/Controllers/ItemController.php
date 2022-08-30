@@ -14,7 +14,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::orderBy('order', 'ASC')->get();
         $no = 1;
     
         return view('table_item',compact('items', 'no'));
@@ -99,7 +99,7 @@ class ItemController extends Controller
     {
         $item = Item::where('id',$id)->first()->toArray();
         $allItem = Item::all()->toArray();
-        $total = count($allItem)+1;
+        $total = count($allItem);
         return view('edit_item', compact('item', 'total'));
     }
 
@@ -139,6 +139,9 @@ class ItemController extends Controller
             $status = 0;
         }
         
+        $itemOrder = Item::where('id', $id)->value('order');
+        $itemOtherId = Item::where('order', $request->order)->first()->value('id');
+        
         $update = Item::where('id', $id)->update([
             'title'=> $request->title,
             'image'=> $profileImage,
@@ -147,7 +150,11 @@ class ItemController extends Controller
             'order' => $request->order,
         ]);
 
-        if($update) {
+        $updateOtherItem = Item::where('id', $itemOtherId)->update([
+            'order' => $itemOrder,
+        ]);
+
+        if($update && $updateOtherItem) {
             return back()->with("success", "Berhasil! data telah diperbarui");
         } else {
             return back()->with("failed", "Gagal! gagal memperbarui data");
