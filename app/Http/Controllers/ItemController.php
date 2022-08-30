@@ -140,7 +140,7 @@ class ItemController extends Controller
         }
         
         $itemOrder = Item::where('id', $id)->value('order');
-        $itemOtherId = Item::where('order', $request->order)->first()->value('id');
+        $itemOtherId = Item::where('order', $request->order)->value('id');
         
         $update = Item::where('id', $id)->update([
             'title'=> $request->title,
