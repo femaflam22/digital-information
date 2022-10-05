@@ -1,82 +1,105 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SMK Wikrama Kota Bogor</title>
-    <link rel="stylesheet" href="{{asset('assets/admin/template/css/custom.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    {{-- slick --}}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    {{-- owl --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-  </head>
-  <body>
+    {{-- custom --}}
+    <link rel="stylesheet" href="{{asset('assets/custom/css-slider.css')}}">
+    {{-- font --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    {{-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    {{-- slick --}}
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    {{-- owl --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-    <div class="slider-wrap">
-        <div class="slide active">
-          <img src="{{asset('images/slide.jpg')}}" alt="" class="img-first">
-          <div class="info i-first">
-          <h2 class="h2-first">Selamat Datang di SMK Wikrama kota Bogor</h2>
-          <p class="p-first">ILMU YANG AMALIAH | AMAL YANG ILMIAH | AKHLAKUL KARIMAH</p>
-          </div>
-        </div>
-        @foreach ($items as $item)
-        <div class="slide">
-            <img src="{{asset('images/'.$item->image)}}" alt="">
-            <div class="info">
-            <h2>{{$item->title}}</h2>
-            @if ($item->desc !== '-')
-                <p>{!! $item->desc !!}</p>
-            @endif
+</head>
+<body>
+
+    <div class="slider">
+    <div class="jumbotron jumbotron-fluid" style="background-image: url({{asset('images/slide.jpg')}})">
+        <div class="container">
+            <div class="info i-first">
+                <h2 class="h2-first" style="font-size: 3em;">Selamat Datang di SMK Wikrama kota Bogor</h2>
+                <p class="p-first" style="font-size: 1.5em;">ILMU YANG AMALIAH | AMAL YANG ILMIAH | AKHLAKUL KARIMAH</p>
             </div>
         </div>
-        @endforeach
-
-        <div class="slide">
-            <div class="slider owl-carousel">
-                @foreach ($prestasi as $data)
-                <div class="card card-2">
-                    <span class="sale">{{$data->date}}</span>
-                    <div class="image">
-                         <img src="{{asset('images/'.$data->image)}}">
-                    </div>
-                    <div class="details">
-                        <h3>{{$data->name}}</h3>
-                        @if ($data->students !== '-')
-                        <div class="desc">
-                            {!! $data->students !!}
-                        </div>
-                        @endif
-                    </div>
-              </div>
-                @endforeach
-          </div>
+    </div>
+    @foreach ($items as $item)
+    <div class="jumbotron jumbotron-fluid" style="background-image: url({{asset('images/'.$item->image)}})">
+        <div class="container">
+            <div class="info">
+                <h2>{{$item->title}}</h2>
+                @if ($item->desc !== '-')
+                    <p>{!! $item->desc !!}</p>
+                @endif
+            </div>
         </div>
-      
-      <div class="navigation">
-        <i class="fas fa-chevron-left prev-btn"></i>
-        <i class="fas fa-chevron-right next-btn"></i>
-      </div>
-      <div class="navigation-visibility">
-        @foreach ($items as $item)
-            @if ($item->id == $no)
-            <div class="slide-icon active"></div>
-            @else
-            <div class="slide-icon"></div>
-            @endif
-        @endforeach
-        <div class="slide-icon"></div>
+    </div>
+    @endforeach
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="slider-owl owl-carousel">
+            @foreach ($prestasi as $data)
+            <div class="card card-2">
+                <span class="sale">{{$data->date}}</span>
+                <div class="image">
+                     <img src="{{asset('images/'.$data->image)}}">
+                </div>
+                <div class="details">
+                    <h3>{{$data->name}}</h3>
+                    @if ($data->students !== '-')
+                    <div class="desc">
+                        {!! $data->students !!}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endforeach
       </div>
     </div>
 
+    </div>
+
     <script>
-        $(".slider").owlCarousel({
-          loop: true,
-          autoplay: true,
-          autoplayTimeout: 3000, //2000ms = 2s;
-          autoplayHoverPause: true,
+        $('.slider').slick({
+            arrows: false,
+            dots: false,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            centerMode: true,
+            variableWidth: true,
+            draggable: true,
+            autoplay: true,
+            autoplaySpeed: 4500
+        });
+
+        $('.slider')
+        .on('beforeChange', function(event, slick, currentSlide, nextSlide){
+            $('.slick-list').addClass('do-transition')
+        })
+        .on('afterChange', function(){
+            $('.slick-list').removeClass('do-transition')
+        });
+
+        $(".slider-owl").owlCarousel({
+            center: true,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000, //2000ms = 2s;
+            autoplayHoverPause: true,
+            margin:10,
+            autoWidth:true,
+            items:3,
         });
     </script>
-    <script src="{{ asset('assets/admin/template/js/custom.js') }}"></script> 
-  </body>
+</body>
 </html>
